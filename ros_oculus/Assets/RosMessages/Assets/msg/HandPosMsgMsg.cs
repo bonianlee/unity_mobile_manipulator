@@ -13,40 +13,52 @@ namespace RosMessageTypes.Assets
         public const string k_RosMessageName = "kinova_test/HandPosMsg";
         public override string RosMessageName => k_RosMessageName;
 
-        public double[] hand_pos;
-        public double[] hand_rot;
+        public double[] hand_pos_w;
+        public double[] hand_rot_w;
+        public double[] hand_pos_m;
+        public double[] hand_rot_m;
 
         public HandPosMsgMsg()
         {
-            this.hand_pos = new double[3];
-            this.hand_rot = new double[3];
+            this.hand_pos_w = new double[3];
+            this.hand_rot_w = new double[3];
+            this.hand_pos_m = new double[3];
+            this.hand_rot_m = new double[3];
         }
 
-        public HandPosMsgMsg(double[] hand_pos, double[] hand_rot)
+        public HandPosMsgMsg(double[] hand_pos_w, double[] hand_rot_w, double[] hand_pos_m, double[] hand_rot_m)
         {
-            this.hand_pos = hand_pos;
-            this.hand_rot = hand_rot;
+            this.hand_pos_w = hand_pos_w;
+            this.hand_rot_w = hand_rot_w;
+            this.hand_pos_m = hand_pos_m;
+            this.hand_rot_m = hand_rot_m;
         }
 
         public static HandPosMsgMsg Deserialize(MessageDeserializer deserializer) => new HandPosMsgMsg(deserializer);
 
         private HandPosMsgMsg(MessageDeserializer deserializer)
         {
-            deserializer.Read(out this.hand_pos, sizeof(double), 3);
-            deserializer.Read(out this.hand_rot, sizeof(double), 3);
+            deserializer.Read(out this.hand_pos_w, sizeof(double), 3);
+            deserializer.Read(out this.hand_rot_w, sizeof(double), 3);
+            deserializer.Read(out this.hand_pos_m, sizeof(double), 3);
+            deserializer.Read(out this.hand_rot_m, sizeof(double), 3);
         }
 
         public override void SerializeTo(MessageSerializer serializer)
         {
-            serializer.Write(this.hand_pos);
-            serializer.Write(this.hand_rot);
+            serializer.Write(this.hand_pos_w);
+            serializer.Write(this.hand_rot_w);
+            serializer.Write(this.hand_pos_m);
+            serializer.Write(this.hand_rot_m);
         }
 
         public override string ToString()
         {
             return "HandPosMsgMsg: " +
-            "\nhand_pos: " + System.String.Join(", ", hand_pos.ToList()) +
-            "\nhand_rot: " + System.String.Join(", ", hand_rot.ToList());
+            "\nhand_pos_w: " + System.String.Join(", ", hand_pos_w.ToList()) +
+            "\nhand_rot_w: " + System.String.Join(", ", hand_rot_w.ToList()) +
+            "\nhand_pos_m: " + System.String.Join(", ", hand_pos_m.ToList()) +
+            "\nhand_rot_m: " + System.String.Join(", ", hand_rot_m.ToList());
         }
 
 #if UNITY_EDITOR
